@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DerbyRelatorioInventarioItensNaoAgrupado" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5901e1fb-9332-4744-a613-a163b25c5eca">
+	<property name="ireport.zoom" value="2.3579476910000023"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="74"/>
+	<parameter name="dataInicial" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="dataFinal" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="tipoInventario" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="tituloRelatorio" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="infoPesquisa" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="descricaoRelatorio" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="quantidadeItens" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select p.id_produto, p.codigo_radar, p.nome_produto, p.descricao_produto, ii.lote, p.local_estoque,
+ii.quantidade, (substr(data_inventario,9,2)|| '/' || substr(data_inventario,6,2)|| '/' || substr(data_inventario,1,4)) as data
+from root.inventario_itens ii
+inner join root.inventario i on (i.id_inventario = ii.id_inventario)
+inner join root.produto p on (p.id_produto = ii.id_produto)
+where (i.data_inventario) between ($P{dataInicial})
+and ($P{dataFinal})
+and i.tipo_inventario = $P{tipoInventario}
+order by (p.codigo_radar)]]>
+	</queryString>
+	<field name="ID_PRODUTO" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="CODIGO_RADAR" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NOME_PRODUTO" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DESCRICAO_PRODUTO" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="LOTE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="LOCAL_ESTOQUE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="QUANTIDADE" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DATA" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="73" splitType="Stretch">
+			<rectangle>
+				<reportElement x="143" y="0" width="658" height="65" forecolor="#F0F0F0" backcolor="#F0F0F0" uuid="a418ffc2-32ba-4b7f-841e-412e8f76a3a2"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="1" y="0" width="131" height="65" forecolor="#999999" backcolor="#999999" uuid="f779d66a-a815-442b-acfa-5a1732f8afba"/>
+			</rectangle>
+			<textField>
+				<reportElement x="144" y="0" width="659" height="65" uuid="f70d737e-d774-4a7a-b3a3-b4486e56871a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="24"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{tituloRelatorio}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="40" splitType="Stretch">
+			<staticText>
+				<reportElement x="2" y="4" width="51" height="14" uuid="86ed2aa3-a937-4f90-90cd-aa8c5723b79e"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Período:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="21" width="121" height="14" uuid="144ad1cc-8e45-4ba9-89e3-e9fb69e9099c"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descrição do Relatório:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="54" y="4" width="748" height="14" uuid="ba4a40f0-acca-497a-a4b2-f3355490725e"/>
+				<textElement>
+					<font isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{infoPesquisa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="123" y="21" width="679" height="14" uuid="f5109291-982d-4c3c-aca6-a1a464deba83"/>
+				<textElement>
+					<font isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{descricaoRelatorio}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="24" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="2" width="53" height="20" uuid="a5e148ca-bccc-4f2b-8404-2ee9e80e118a"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cod.Radar]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="54" y="2" width="174" height="20" uuid="e83e7c06-88fb-4d78-a011-c14ae607abc9"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nome]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="228" y="2" width="373" height="20" uuid="937146bb-d887-4910-96c3-32c5938d56bf"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descrição]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="601" y="2" width="50" height="20" uuid="652c6f71-c749-4502-88c4-dfbe79ccbede"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Lote]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="651" y="2" width="50" height="20" uuid="21d2c5af-3ade-423c-ab80-46403d9a7e5e"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Local.Est.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="701" y="2" width="50" height="20" uuid="69f2b6f6-030d-4447-8598-cc0e9acae4b1"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Qtde.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="751" y="2" width="50" height="20" uuid="66fee83d-4f7f-4b5b-91b2-7033838650f6"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="1" width="802" height="1" uuid="2d12cca5-e845-4a09-a063-bed141994ff2"/>
+			</line>
+			<line>
+				<reportElement x="0" y="21" width="802" height="1" uuid="2534f1bf-b2d9-4ab3-9882-50f3ae6f7ad6"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="23" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="53" height="20" uuid="82050231-4bcd-428e-ae5d-5b0bf17b5f83"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CODIGO_RADAR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="54" y="0" width="173" height="20" uuid="022b309d-c5ab-4c18-9010-db6e7df34e0e"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOME_PRODUTO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="228" y="0" width="372" height="20" uuid="2155661a-fdbe-4c1b-bf72-fc6846ba37f2"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DESCRICAO_PRODUTO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="601" y="0" width="49" height="20" uuid="3ad12630-1fa6-4f3c-8b80-e7ba173e3787"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LOTE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="651" y="0" width="49" height="20" uuid="f3d3540d-610d-4fad-9f07-a7b1f5854301"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{LOCAL_ESTOQUE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="701" y="0" width="49" height="20" uuid="8ae9d383-96e8-4aab-92b9-1bab4f21af7f"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{QUANTIDADE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="751" y="0" width="49" height="20" uuid="1bff7911-3a73-4a94-9215-e4a95d49c327"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DATA}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="21" width="802" height="1" forecolor="#F0F0F0" uuid="8ab34f5f-ea76-4546-b012-ede2399de55f"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="18" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="3" width="800" height="14" uuid="6117fdc0-81f4-47fa-a0ae-9288cd5af5ab"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{quantidadeItens}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="4" width="86" height="14" uuid="74c86761-6dec-4845-9c60-74dae176fa79"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data de Emissão:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="86" y="4" width="100" height="14" uuid="c01da955-4da8-4cd8-a2b3-d010789fdfe6"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="492" y="4" width="310" height="14" uuid="fa88fea9-57dc-41a0-a354-49c6d06dd427"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pagina " + $V{PAGE_NUMBER} + " de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="1" width="802" height="1" uuid="94dc82ff-7542-4446-bd47-f1b6d73d10dc"/>
+			</line>
+		</band>
+	</pageFooter>
+</jasperReport>
